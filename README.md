@@ -22,3 +22,5 @@ Steps before creating the "Images" directory
 - **BROM** or **EDL** is your safety net if you can go to it but not **fastboot**
 - Use **mtkclient** for **BROM**
 - **BROM** is for **Mediatek** devices and **EDL** is for **Snapdragon** devices
+## Malware and Security
+- Please don't add any sort of **malware** or **security risk**
