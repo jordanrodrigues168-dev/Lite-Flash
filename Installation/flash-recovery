@@ -1,0 +1,104 @@
+# -- Functions
+ui_printInfo() {
+  echo "[Info] $1"
+}
+
+ui_printAction() {
+  echo "[Action] $1"
+}
+
+ui_printSuccess() {
+  echo "[Success] $1"
+}
+
+ui_printError() {
+  echo "[Error] $1"
+  echo "[Error Handler] Killing ADB Server..."
+  adb kill-server
+  echo "[Error Handler] Aborting..."
+  exit 1
+}
+
+ui_printErrorDK() {
+  echo "[Error] $1"
+  echo "[Error Handler] Aborting..."
+  exit 1
+}
+
+# -- Start the ADB Server
+ui_printAction "Starting ADB Server..."
+if ! adb start-server > /dev/null 2>&1; then
+  ui_printErrorDK "Could not start ADB Server!"
+fi
+ui_printSuccess "Started ADB Server"
+
+# -- Device Check
+ui_printAction "Verifying device status..."
+if ! adb get-state > /dev/null 2>&1; then
+  ui_printError "Device not found, not authorized, or in incorrect mode!"
+fi
+ui_printSuccess "Verified device status"
+
+
+# -- Combined properties check
+scriptVersion="v1.3.0-release"
+data=$(adb shell "getprop ro.product.marketname; getprop ro.product.model; getprop ro.build.version.release; getprop ro.board.platform; getprop ro.product.cpu.abi; getprop ro.boot.flash.locked" | tr '\n' '|')
+
+deviceName=$(echo "$data" | cut -d'|' -f1)
+deviceModel=$(echo "$data" | cut -d'|' -f2)
+androidVersion=$(echo "$data" | cut -d'|' -f3)
+deviceCPU=$(echo "$data" | cut -d'|' -f4)
+deviceABI=$(echo "$data" | cut -d'|' -f5)
+bootStatus=$(echo "$data" | cut -d'|' -f6)
+
+# -- Root Check
+if adb shell "which su" > /dev/null 2>&1; then
+    rootStatus="Already Rooted"
+else
+    rootStatus="Not Rooted"
+fi
+
+# -- Device Info Display
+echo ""
+echo "[Info Section] Target Device Info"
+echo "--------------------------------------"
+ui_printInfo "Script Version: $scriptVersion"
+ui_printInfo "Target Device: $deviceName ($deviceModel)"
+ui_printInfo "Android Version: $androidVersion"
+ui_printInfo "Architecture: $deviceABI"
+ui_printInfo "Current Root Status: $rootStatus"
+echo "--------------------------------------"
+read -p "Verify the info above. Press ENTER to start or CTRL+C to abort..."
+
+# -- Recovery Process
+echo "-------------------------------------"
+ui_printAction "Checking bootloader status..."
+if [ "$bootStatus" = "1" ]; then
+  ui_printError "Bootloader is locked! Custom recovery cannot be installed."
+fi
+ui_printSuccess "Bootloader is unlocked"
+
+ui_printAction "Rebooting to Bootloader..."
+adb reboot bootloader
+
+ui_printAction "Waiting for Fastboot connection..."
+until [ -n "$(fastboot devices | awk '{print $1}')" ]; do
+  sleep 1
+done
+ui_printSuccess "Device detected in Fastboot mode!"
+
+# -- Flashing Logic
+cd Images
+ui_printAction "Scanning for recovery image..."
+if [ -f "recovery.img" ]; then
+    ui_printAction "Flashing recovery.img..."
+    fastboot flash recovery recovery.img || ui_printError "Flash failed! Check connection."
+    ui_printSuccess "Recovery flashing sequence complete!"
+else
+    ui_printErrorDK "recovery.img not found in Images directory!"
+fi
+
+ui_printAction "Rebooting device..."
+fastboot reboot
+echo "-------------------------------------"
+ui_printInfo "Process complete. You can now boot into your custom recovery."
