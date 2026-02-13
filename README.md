@@ -1,6 +1,6 @@
 # Lite-Flash
 Lite Flash is tool you can use in Termux to root most Android devices easily
-Steps before creating the "Images" directory
+## Steps before creating the "Images" directory
 - You need **Termux** from **F-Droid** or **Github**
 - Update and upgrade with **pkg upgrade** and **pkg update**
 - Install a package in Termux called "**android-tools**"
