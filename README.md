@@ -17,10 +17,11 @@ Lite Flash is tool you can use in Termux to root most Android devices easily
 
 ## Install Easily
 • **Run** this **command** in **Termux**
-``
+```bash
 curl -sL https://raw.githubusercontent.com/jordanrodrigues168-dev/Lite-Flash/main/install.sh | bash
-``
-
+```
+• You can also **check** the **source code** of **install.sh** at that **website**
+• All **source code** is **available** at the **GitHub website** or **zips at releases** but i might fall at **updating quickly**
 
 ## What if something goes wrong and my target device is in a bootloop?
 - Go back to **fastboot** and flash the **stock boot image** in **Termux**
