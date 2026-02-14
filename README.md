@@ -15,6 +15,13 @@ Lite Flash is tool you can use in Termux to root most Android devices easily
 - You need **Termux-ADB** or **Termux-API** with **libusb** if needed for **non-root hosts**
 - With **Termux-API** you can use it to **track** the **USB Connection** and then use another command to allow **Termux-API** and **Termux** to use it
 
+## Install Easily
+• **Run** this **command** in **Termux**
+``
+curl -sL https://raw.githubusercontent.com/jordanrodrigues168-dev/Lite-Flash/main/install.sh | bash
+``
+
+
 ## What if something goes wrong and my target device is in a bootloop?
 - Go back to **fastboot** and flash the **stock boot image** in **Termux**
 - This is why you should keep a **backup** of the **stock boot image**
