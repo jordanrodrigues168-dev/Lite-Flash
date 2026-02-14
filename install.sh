@@ -36,13 +36,10 @@ wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/rel
 
 unzip -o Lite-Flash-v1.4.5-release.zip -d "$HOME/lite-flash" > /dev/null 2>&1
 echo "- Setup complete"
-# -- Add to PATH automatically
-if [[ ":$PATH:" != *":$HOME/lite-flash:"* ]]; then
-    echo "lite-flash() {" >> ~/.bashrc
-    echo "if [ "$1" = "flash-root" ]; then" >> ~/.bashrc
-    echo "cd lite-flash && bash flash-root" >> ~/.bashrc
-    echo "fi" >> ~/.bashrc
-    source ~/.bashrc
-    echo "- Added to PATH"
-fi
+echo "lite-flash() {" >> ~/.bashrc
+echo "if [ "$1" = "flash-root" ]; then" >> ~/.bashrc
+echo "cd lite-flash" >> ~/.bashrc
+echo "cd Installation && bash flash-root" >> ~/.bashrc
+echo "fi" >> ~/.bashrc
+source ~/.bashrc
 chmod +x $HOME/lite-flash/*
