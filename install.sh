@@ -1,7 +1,8 @@
 # -- Install packages
 echo "- Updating and Upgrading"
 sleep 0.5
-pkg update && pkg upgrade > /dev/null 2>&1
+pkg update > /dev/null 2>&1
+pkg upgrade > /dev/null 2>&1
 echo "- Action finished"
 sleep 0.5
 echo "- Installing wget"
