@@ -10,8 +10,7 @@ pkg install wget unzip -y > /dev/null 2>&1
 echo "- Action finished"
 sleep 0.35
 # -- Check for root
-checkRoot=$(su -c "id -u")
-if [[ "$checkRoot" -eq 0 ]]; then
+if $(su); then
 echo "- Found root"
 sleep 0.5
 echo "- Installing Android Debug Bridge"
