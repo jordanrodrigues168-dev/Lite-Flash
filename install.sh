@@ -33,11 +33,10 @@ fi
 echo "- Getting storage permissions"
 termux-setup-storage
 echo "- Getting zip"
-wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/releases/download/Lite-Flash-v1.4.5/Lite-Flash-v1.4.5.zip
+wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/releases/download/Lite-Flash-v1.4.5/Lite-Flash-v1.4.5.zip > /dev/null 2>&1
 
-unzip -o Lite-Flash-v1.4.5.zip -d "$HOME/lite-flash" > /dev/null
-[span_0](start_span)mkdir -p /sdcard/lite-flash/backups[span_0](end_span)
-echo "- Setup complete. Run 'sh backup-Images' before flashing."
+unzip -o Lite-Flash-v1.4.5 -d "$HOME/lite-flash" > /dev/null 2>&1
+echo "- Setup complete"
 # -- Add to PATH automatically
 if [[ ":$PATH:" != *":$HOME/lite-flash:"* ]]; then
     echo 'export PATH="$PATH:$HOME/lite-flash"' >> ~/.bashrc
