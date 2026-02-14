@@ -1,11 +1,10 @@
 # -- Install packages
-echo "- Updating and Upgrading"
-sleep 0.5
-pkg update > /dev/null 2>&1
-pkg upgrade > /dev/null 2>&1
+echo "- Updating and Upgrading (this may take a moment)..."
+pkg update -y -qq > /dev/null 2>&1
+pkg upgrade -y -qq > /dev/null 2>&1
 echo "- Action finished"
 sleep 0.5
-echo "- Installing wget"
+echo "- Installing wget and unzip"
 sleep 0.35
 pkg install wget unzip -y > /dev/null 2>&1
 echo "- Action finished"
@@ -33,9 +32,9 @@ fi
 echo "- Getting storage permissions"
 termux-setup-storage > /dev/null 2>&1
 echo "- Getting zip"
-wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/releases/download/Lite-Flash-v1.4.5/Lite-Flash-v1.4.5.zip > /dev/null 2>&1
+wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/releases/download/Lite-Flash-v1.4.5/Lite-Flash-v1.4.5-release.zip > /dev/null 2>&1
 
-unzip -o Lite-Flash-v1.4.5 -d "$HOME/lite-flash" > /dev/null 2>&1
+unzip -o Lite-Flash-v1.4.5-release.zip -d "$HOME/lite-flash" > /dev/null 2>&1
 echo "- Setup complete"
 # -- Add to PATH automatically
 if [[ ":$PATH:" != *":$HOME/lite-flash:"* ]]; then
