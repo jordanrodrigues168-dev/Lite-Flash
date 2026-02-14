@@ -10,7 +10,7 @@ pkg install wget unzip -y > /dev/null 2>&1
 echo "- Action finished"
 sleep 0.35
 # -- Check for root
-if $(su); then
+if $(su > /dev/null 2>&1); then
 echo "- Found root"
 sleep 0.5
 echo "- Installing Android Debug Bridge"
@@ -30,7 +30,7 @@ echo "- [2/2] Action finished"
 fi
 # -- Get zip
 echo "- Getting storage permissions"
-termux-setup-storage
+termux-setup-storage > /dev/null 2>&1
 echo "- Getting zip"
 wget -q --show-progress https://github.com/jordanrodrigues168-dev/Lite-Flash/releases/download/Lite-Flash-v1.4.5/Lite-Flash-v1.4.5.zip > /dev/null 2>&1
 
